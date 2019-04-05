@@ -2,7 +2,8 @@ from django.db import models
 from Users.models import CustomUser, ClientDetail, DealerDetail
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-
+import io
+from django.core.files.storage import default_storage as storage
 
 # Create your models here.
 
@@ -10,7 +11,6 @@ import uuid
 import os
 from django.conf import settings
 from PIL import Image
-
 
 def scramble_uploaded_filename(instance, filename):
     """
@@ -23,66 +23,53 @@ def scramble_uploaded_filename(instance, filename):
     return "{}.{}".format(uuid.uuid4(), extension)
 
 # creates a thumbnail of an existing image
-
-
 def create_thumbnail(input_image, thumbnail_size=(256, 256)):
-    """
-    Create a thumbnail of an existing image
-    :param input_image:
-    :param thumbnail_size:
-    :return:
-    """
-    # make sure an image has been set
+    
     if not input_image or input_image == "":
         return
-
-    # open image
-    image = Image.open(input_image)
+    img_read = storage.open(input_image.name, 'r')
+    img = Image.open(img_read)
 
     # use PILs thumbnail method; use anti aliasing to make the scaled picture look good
-    image.thumbnail(thumbnail_size, Image.ANTIALIAS)
-
+    img.thumbnail(thumbnail_size, Image.ANTIALIAS)
+    in_mem_file = io.BytesIO()
     # parse the filename and scramble it
-    filename = scramble_uploaded_filename(
-        None, os.path.basename(input_image.name))
+    """filename = None, storage.open(input_image.name))
     arrdata = filename.split(".")
     # extension is in the last element, pop it
     extension = arrdata.pop()
     basename = "".join(arrdata)
-    # add _thumb to the filename
-    new_filename = basename + "_thumb." + extension
+    # add _thumb to the filename"""
+    print(storage.open(input_image.name))
+    new_filename = "thumb_"+str(storage.open(input_image.name))
+
 
     # save the image in MEDIA_ROOT and return the filename
-    image.save(os.path.join(settings.MEDIA_ROOT, new_filename))
+    img.save(in_mem_file, format='JPEG')
+    img_write = storage.open(new_filename, 'w+')
+    img_write.write(in_mem_file.getvalue())
+    img_write.close()
+    img_read.close()
 
     return new_filename
-
-
 class Bike(models.Model):
     bike_name = models.CharField(max_length=500, default='type..')
     image = models.ImageField(
-        "media", upload_to=scramble_uploaded_filename, default='def.jpg')
+        "media", upload_to='', default='def.jpg')
     thumbnail = models.ImageField(
         "Thumbnail of uploaded image", blank=True, default='defthumb.jpg')
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        """
-        On save, generate a new thumbnail
-        :param force_insert:
-        :param force_update:
-        :param using:
-        :param update_fields:
-        :return:
-        """
+    def save(self, *args, **kwargs):
+    super().save(*args, **kwargs)
         # generate and set thumbnail or none
         self.thumbnail = create_thumbnail(self.image)
 
         # Check if a pk has been set, meaning that we are not creating a new image, but updateing an existing one
         if self.pk:
-            force_update = True
+           force_update = True
 
         # force update as we just changed something
-        super(Bike, self).save(force_update=force_update)
+        super(Bike, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.bike_name

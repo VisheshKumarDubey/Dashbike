@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '3@wu=@%01^7*5e&w1cs8p5#3y0c=679ej(+^!!s9iliy8=_n=i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True    
 
 ALLOWED_HOSTS = ['*']
 
@@ -202,7 +202,7 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'..', "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     "REGISTER_SERIALIZER": "Users.serializers.CustomRegisterSerializer",
@@ -247,3 +247,22 @@ ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy(
     'account_confirm_complete')
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
     'account_confirm_complete')
+AWS_ACCESS_KEY_ID = 'AKIAQRD6ZYOMXGU7FEC2'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'dashu'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'Dashbike/static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'Dashbike.storage_backends.MediaStorage'
+
+
+
