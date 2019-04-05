@@ -60,7 +60,7 @@ class Bike(models.Model):
         "Thumbnail of uploaded image", blank=True, default='defthumb.jpg')
 
     def save(self, *args, **kwargs):
-    super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
         # generate and set thumbnail or none
         self.thumbnail = create_thumbnail(self.image)
 

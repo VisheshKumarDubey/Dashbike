@@ -74,7 +74,7 @@ class ClientDetail(models.Model):
     image = models.ImageField("media",upload_to='',default='def.jpeg')
     thumbnail = models.ImageField("Thumbnail of uploaded image", blank=True,default='defthumb.jpeg')
     def save(self, *args, **kwargs):
-    super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
         # generate and set thumbnail or none
         self.thumbnail = create_thumbnail(self.image)
 
@@ -101,7 +101,7 @@ class DealerDetail(models.Model):
 
 
     def save(self, *args, **kwargs):
-    super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
         # generate and set thumbnail or none
         self.thumbnail = create_thumbnail(self.image)
 
