@@ -36,51 +36,8 @@ NEARBY_SHOPS = False
 
 ACTIVATE_EMAIL = False
 
-GATEWAY = False
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'drfaddons',
-    'allauth.socialaccount',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth',
-    'api',
-    'Users',
-   # 'gateway',
-]
-if(GATEWAY):
-    INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'drfaddons',
-    'allauth.socialaccount',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth',
-    'api',
-    'Users',
-    'gateway',
-        ]
-else:
-    INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
