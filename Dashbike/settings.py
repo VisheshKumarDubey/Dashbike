@@ -36,7 +36,7 @@ NEARBY_SHOPS = False
 
 ACTIVATE_EMAIL = False
 
-GATEWAY = True
+GATEWAY = False
 
 INSTALLED_APPS = [
     'django.contrib.admin',
