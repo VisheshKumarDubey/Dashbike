@@ -23,7 +23,7 @@ import api.urls
 
 
 
-    urlpatterns = [
+urlpatterns = [
     url(r'^api/v1/', include(Users.urls)),
     path('api/v1/', include(api.urls)),
     path('admin/', admin.site.urls),
