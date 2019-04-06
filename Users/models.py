@@ -79,8 +79,7 @@ class ClientDetail(models.Model):
         self.thumbnail = create_thumbnail(self.image)
 
         # Check if a pk has been set, meaning that we are not creating a new image, but updateing an existing one
-        if self.pk:
-           force_update = True
+        
 
         # force update as we just changed something
         super(ClientDetail, self).save(*args, **kwargs)
