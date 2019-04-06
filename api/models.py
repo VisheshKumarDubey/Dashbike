@@ -12,6 +12,7 @@ import os
 from django.conf import settings
 from PIL import Image
 
+
 def scramble_uploaded_filename(instance, filename):
     """
     Scramble / uglify the filename of the uploaded file, but keep the files extension (e.g., .jpg or .png)
@@ -20,11 +21,13 @@ def scramble_uploaded_filename(instance, filename):
     :return:
     """
     extension = filename.split(".")[-1]
-    return "{}.{}".format(uuid.uuid4(), extension)
+    return "media/bikes/{}.{}".format(uuid.uuid4(), extension)
 
 # creates a thumbnail of an existing image
+
+
 def create_thumbnail(input_image, thumbnail_size=(256, 256)):
-    
+
     if not input_image or input_image == "":
         return
     img_read = storage.open(input_image.name, 'r')
@@ -34,17 +37,10 @@ def create_thumbnail(input_image, thumbnail_size=(256, 256)):
     img.thumbnail(thumbnail_size, Image.ANTIALIAS)
     in_mem_file = io.BytesIO()
     # parse the filename and scramble it
-    """filename = None, storage.open(input_image.name))
-    arrdata = filename.split(".")
-    # extension is in the last element, pop it
-    extension = arrdata.pop()
-    basename = "".join(arrdata)
-    # add _thumb to the filename"""
     print(storage.open(input_image.name))
     new_filename = "thumb_"+str(storage.open(input_image.name))
 
-
-    # save the image in MEDIA_ROOT and return the filename
+    # save the image in Amazon S3 and return the filename
     img.save(in_mem_file, format='JPEG')
     img_write = storage.open(new_filename, 'w+')
     img_write.write(in_mem_file.getvalue())
@@ -52,23 +48,19 @@ def create_thumbnail(input_image, thumbnail_size=(256, 256)):
     img_read.close()
 
     return new_filename
+
+
 class Bike(models.Model):
     bike_name = models.CharField(max_length=500, default='type..')
     image = models.ImageField(
-        "media", upload_to='', default='def.jpg')
+        "media", upload_to=scramble_uploaded_filename, default='def.jpg')
     thumbnail = models.ImageField(
         "Thumbnail of uploaded image", blank=True, default='defthumb.jpg')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        # generate and set thumbnail or none
         self.thumbnail = create_thumbnail(self.image)
 
-        # Check if a pk has been set, meaning that we are not creating a new image, but updateing an existing one
-        if self.pk:
-           force_update = True
-
-        # force update as we just changed something
         super(Bike, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -78,7 +70,7 @@ class Bike(models.Model):
 class Booking(models.Model):
     bike_model = models.ForeignKey(
         'BikeModel', on_delete=models.CASCADE, default=None)
-    bike_from = models.DateTimeField(default=None)
+    pickup_time = models.DateTimeField(default=None)
     dob = models.DateTimeField(default=None)
     duration = models.CharField(max_length=500, default=0.0)
     client = models.ForeignKey(
@@ -90,10 +82,11 @@ class Booking(models.Model):
     ord_id = models.CharField(max_length=500, default=0.0)
     transaction_id = models.CharField(max_length=500, default=0.0)
     is_accepted = models.BooleanField(default=False)
+    is_cancelled = models.BooleanField(default=False)
+    is_Booked = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.bike_model.dealer)
-
 
 
 class BikeModel(models.Model):

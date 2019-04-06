@@ -21,7 +21,7 @@ def scramble_uploaded_filename(instance, filename):
     
     extension = filename.split(".")[-1]
     print("{}.{}".format(uuid.uuid4(), extension)+"sdfabvhbdsihlKJS DKJA")
-    return "{}.{}".format(uuid.uuid4(), extension)
+    return "media/profile/{}.{}".format(uuid.uuid4(), extension)
 
 # creates a thumbnail of an existing image
 def create_thumbnail(input_image, thumbnail_size=(256, 256)):
@@ -82,7 +82,8 @@ class ClientDetail(models.Model):
         
 
         # force update as we just changed something
-        super(ClientDetail, self).save(*args, **kwargs)
+        #save(update_fields=['field_a', 'field_b'])
+        super(ClientDetail, self).save(update_fields=['thumbnail'])
 
     def __str__(self):
         return self.type.username
@@ -96,6 +97,8 @@ class DealerDetail(models.Model):
    # distance= models.FloatField(null=True, blank=True, default=None)
     image = models.ImageField("media",upload_to=scramble_uploaded_filename,default='def.jpeg')
     thumbnail = models.ImageField("Thumbnail of uploaded image", blank=True,default='defthumb.jpeg')
+    on_hour=models.CharField(max_length=200,null=True, blank=True, default=None)
+    off_hour=models.CharField(max_length=200,null=True, blank=True, default=None)
     has_bike = models.BooleanField(default=True)
 
 
@@ -109,7 +112,7 @@ class DealerDetail(models.Model):
            force_update = True
 
         # force update as we just changed something
-        super(DealerDetail, self).save(*args, **kwargs)
+        super(DealerDetail, self).save(update_fields=['thumbnail'])
 
     def __str__(self):
         return self.type.username
