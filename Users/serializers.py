@@ -44,7 +44,7 @@ class DealerProfileSerializer(serializers.ModelSerializer):
 
 
 class ClientProfileSerializer(serializers.ModelSerializer):
-
+    
     class Meta:
         model = ClientDetail
         fields = '__all__'

@@ -6,6 +6,13 @@ from rest_framework.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.exceptions import APIException
 
+class BikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bike
+        fields = '__all__'
+        read_only_fields = ('thumbnail', )
+        # depth=1
+
 class BikeModelSerializer(serializers.ModelSerializer):
     bike_img = serializers.ImageField(read_only=True)
     thumbnail = serializers.ImageField(read_only=True)
@@ -15,16 +22,16 @@ class BikeModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = BikeModel
         fields = ('id', "bike_model", 'dealer', 'description', 'count', 'bike_rate_hr',
-                  'bike_rate_h', 'bike_rate_f', "bike_img", 'bike_isAvailable','thumbnail')
+                  'bike_rate_h', 'bike_rate_f', "bike_img", 'bike_isAvailable', 'thumbnail')
         read_only_fields = ('is_active', 'dealer')
         extra_kwargs = {'count': {'required': True}}
-        
+
     def create(self, validated_data):
         if(self.context['request'].user.user_type == 'Dealer'):
             return BikeModel.objects.create(dealer=DealerDetail.objects.get(type=self.context['request'].user),
                                             bike_model=Bike.objects.get(bike_name=validated_data.get(
-                'bike_model')),
-                description=validated_data.get(
+                                                'bike_model')),
+                                            description=validated_data.get(
                 'description'),
                 count=validated_data.get('count'),
                 bike_rate_hr=validated_data.get(
@@ -55,32 +62,55 @@ class BikeModelSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class UserSerializer(serializers.ModelSerializer):
 
+class UserSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = CustomUser
         exclude = (
             'password', 'last_login', 'is_superuser', 'email',
-             'is_active',
-            'is_staff', 'groups', 'user_permissions','id','first_name','last_name',"date_joined",'user_type','number'
+            'is_active',
+            'is_staff', 'groups', 'user_permissions', 'id', 'first_name', 'last_name', "date_joined", 'user_type', 'number'
         )
-class DealerDetailSerializer(serializers.ModelSerializer):
-    reverseAdd=serializers.CharField(read_only=True)
-    type = UserSerializer()
-    class Meta:
-        model = DealerDetail
-        fields = ('id','type', 'extra_info', 'thumbnail','image','latitude','longitude','reverseAdd')
-        read_only_fields = ('thumbnail', )
-        depth=1
+
 class BookingSerializer(serializers.ModelSerializer):
+    dealer_name=serializers.CharField(read_only=True)
+    bike_model_name=serializers.CharField(read_only=True)
+    booking_status = (
+        ('cancelled', 'cancelled'),
+        ('failed', 'failed'),
+        ('booked', 'booked'),
+        ('pending', 'pending'),
+    )
+    status = serializers.ChoiceField(choices=booking_status,
+        style={'base_template': 'radio.html'},
+        required=True)
+    unit_duration = (
+        ('hrs', 'hrs'),
+        ('half_day', 'half_day'),
+        ('full_day', 'full_day'),
+    )
+    duration_unit = serializers.ChoiceField(choices=unit_duration,
+        style={'base_template': 'radio.html'},
+        required=True)
     class Meta:
         model = Booking
-        fields = ('dealer','bike_model','pickup_time','dob','duration','client','transaction_amt','ord_id','transaction_id','is_accepted','is_cancelled','is_Booked')
+        fields = ('id','dealer','dealer_name', 'bike_model','bike_model_name', 'pickup_time', 'booking_time', 'duration', 'client',
+                  'transaction_amt', 'ord_id', 'transaction_id','status','duration_unit')
         #depth=1
 
-class BikeSerializer(serializers.ModelSerializer):
+class DealerDetailSerializer(serializers.ModelSerializer):
+    reverseAdd = serializers.CharField(read_only=True)
+    dealer_name=serializers.CharField(read_only=True)
+    
     class Meta:
-        model = Bike
-        fields = '__all__'
+        model = DealerDetail
+        fields = ('id', 'dealer_name','extra_info', 'thumbnail',
+                  'image', 'latitude', 'longitude', 'reverseAdd')
         read_only_fields = ('thumbnail', )
-        #depth=1
+        #depth = 1
+
+
+
+
+

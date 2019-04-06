@@ -66,29 +66,6 @@ class Bike(models.Model):
     def __str__(self):
         return self.bike_name
 
-
-class Booking(models.Model):
-    bike_model = models.ForeignKey(
-        'BikeModel', on_delete=models.CASCADE, default=None)
-    pickup_time = models.DateTimeField(default=None)
-    dob = models.DateTimeField(default=None)
-    duration = models.CharField(max_length=500, default=0.0)
-    client = models.ForeignKey(
-        ClientDetail, on_delete=models.CASCADE, default=None)
-    dealer = models.ForeignKey(
-        DealerDetail, on_delete=models.CASCADE, default=None)
-    transaction_amt = models.CharField(
-        max_length=500, default=0.0)  # change name
-    ord_id = models.CharField(max_length=500, default=0.0)
-    transaction_id = models.CharField(max_length=500, default=0.0)
-    is_accepted = models.BooleanField(default=False)
-    is_cancelled = models.BooleanField(default=False)
-    is_Booked = models.BooleanField(default=False)
-
-    def __str__(self):
-        return str(self.bike_model.dealer)
-
-
 class BikeModel(models.Model):
     bike_model = models.ForeignKey(
         'Bike', on_delete=models.PROTECT, default=None)
@@ -101,6 +78,7 @@ class BikeModel(models.Model):
     bike_rate_f = models.CharField(max_length=500, null=True, blank=True)
     bike_isAvailable = models.BooleanField(default=True)
     isActive = models.BooleanField(default=True)
+    
 
     def bike_img(self):
         return self.bike_model.image
@@ -111,3 +89,43 @@ class BikeModel(models.Model):
     def __str__(self):
 
         return str(self.bike_model)
+
+class Booking(models.Model):
+    bike_model = models.ForeignKey(
+        'BikeModel', on_delete=models.CASCADE, default=None)
+    pickup_time = models.DateTimeField(default=None)
+    booking_time = models.DateTimeField(default=None)
+    duration = models.CharField(max_length=500, default=0.0)
+    client = models.ForeignKey(
+        ClientDetail, on_delete=models.CASCADE, default=None)
+    dealer = models.ForeignKey(
+        DealerDetail, on_delete=models.CASCADE, default=None)
+    transaction_amt = models.CharField(
+        max_length=500, default=0.0)  # change name
+    ord_id = models.CharField(max_length=500, default=0.0)
+    transaction_id = models.CharField(max_length=500, default=0.0)
+    booking_status = (
+        ('cancelled', 'cancelled'),
+        ('failed', 'failed'),
+        ('booked', 'booked'),
+        ('pending', 'pending'),
+    )
+    status = models.CharField(
+        max_length=20, choices=booking_status, default='pending')
+    unit_duration = (
+        ('hrs', 'hrs'),
+        ('half_day', 'half_day'),
+        ('full_day', 'full_day'),
+    )
+    duration_unit = models.CharField(
+        max_length=20, choices=unit_duration, default='hrs')
+
+    def __str__(self):
+        return str(self.bike_model.dealer)
+    def dealer_name(self):
+        return str(self.bike_model.dealer.type.username)
+    def bike_model_name(self):
+        return str(self.bike_model.bike_model.bike_name)
+
+
+

@@ -11,16 +11,7 @@ from PIL import Image
 
 
 def scramble_uploaded_filename(instance, filename):
-    """
-    Scramble / uglify the filename of the uploaded file, but keep the files extension (e.g., .jpg or .png)
-    :param instance:
-    :param filename:
-    :return:
-    """
-    print("vishesh")
-    
     extension = filename.split(".")[-1]
-    print("{}.{}".format(uuid.uuid4(), extension)+"sdfabvhbdsihlKJS DKJA")
     return "media/profile/{}.{}".format(uuid.uuid4(), extension)
 
 # creates a thumbnail of an existing image
@@ -34,19 +25,12 @@ def create_thumbnail(input_image, thumbnail_size=(256, 256)):
     # use PILs thumbnail method; use anti aliasing to make the scaled picture look good
     img.thumbnail(thumbnail_size, Image.ANTIALIAS)
     in_mem_file = io.BytesIO()
-    # parse the filename and scramble it
-    """filename = None, storage.open(input_image.name))
-    arrdata = filename.split(".")
-    # extension is in the last element, pop it
-    extension = arrdata.pop()
-    basename = "".join(arrdata)
-    # add _thumb to the filename"""
     print(storage.open(input_image.name))
     new_filename = "thumb_"+str(storage.open(input_image.name))
 
 
     # save the image in MEDIA_ROOT and return the filename
-    img.save(in_mem_file, format='JPEG')
+    img.save(in_mem_file, format='PNG')
     img_write = storage.open(new_filename, 'w+')
     img_write.write(in_mem_file.getvalue())
     img_write.close()
@@ -84,8 +68,12 @@ class ClientDetail(models.Model):
         # force update as we just changed something
         #save(update_fields=['field_a', 'field_b'])
         super(ClientDetail, self).save(update_fields=['thumbnail'])
+    
 
     def __str__(self):
+        return self.type.username
+
+    def client_name(self):
         return self.type.username
 
 
@@ -115,3 +103,7 @@ class DealerDetail(models.Model):
 
     def __str__(self):
         return self.type.username
+    def dealer_name(self):
+        return self.type.username
+    
+   
