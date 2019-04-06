@@ -174,6 +174,7 @@ REST_AUTH_SERIALIZERS = {
 ACCOUNT_ADAPTER = 'Users.adapters.CustomUserAccountAdapter'
 
 # Email backend settings for Django
+EMAIL_BACKEND = ‘django.core.mail.backends.smtp.EmailBackend’
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'dashletter01@gmail.com'
 EMAIL_HOST_PASSWORD = 'django12345'
