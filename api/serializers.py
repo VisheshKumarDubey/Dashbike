@@ -75,8 +75,8 @@ class DealerDetailSerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = '__all__'
-        depth=1
+        fields = ('dealer','bike_model','pickup_time','dob','duration','client','transaction_amt','ord_id','transaction_id','is_accepted','is_cancelled','is_Booked')
+        #depth=1
 
 class BikeSerializer(serializers.ModelSerializer):
     class Meta:
