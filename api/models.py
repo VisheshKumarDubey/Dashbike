@@ -51,7 +51,7 @@ def create_thumbnail(input_image, thumbnail_size=(256, 256)):
 
 
 class Bike(models.Model):
-    bike_name = models.CharField(max_length=500, default='type..')
+    bike_name = models.CharField(max_length=500, default=None)
     image = models.ImageField(
         "media", upload_to=scramble_uploaded_filename, default='def.jpg')
     thumbnail = models.ImageField(
@@ -94,7 +94,7 @@ class BikeModel(models.Model):
         'Bike', on_delete=models.PROTECT, default=None)
     dealer = models.ForeignKey(
         DealerDetail, on_delete=models.CASCADE, default=None)
-    description = models.CharField(max_length=500, default='type..')
+    description = models.CharField(max_length=500, default=None)
     count = models.IntegerField(default=0)
     bike_rate_hr = models.CharField(max_length=500, null=True, blank=True)
     bike_rate_h = models.CharField(max_length=500, null=True, blank=True)

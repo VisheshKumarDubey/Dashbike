@@ -94,11 +94,10 @@ class DealerDetail(models.Model):
     extra_info = models.CharField(max_length=200)
     latitude = models.FloatField(null=True, blank=True, default=None)
     longitude = models.FloatField(null=True, blank=True, default=None)
-   # distance= models.FloatField(null=True, blank=True, default=None)
     image = models.ImageField("media",upload_to=scramble_uploaded_filename,default='def.jpeg')
     thumbnail = models.ImageField("Thumbnail of uploaded image", blank=True,default='defthumb.jpeg')
-    on_hour=models.CharField(max_length=200,null=True, blank=True, default=None)
-    off_hour=models.CharField(max_length=200,null=True, blank=True, default=None)
+    on_hour=models.DateTimeField(default=None)
+    off_hour=models.DateTimeField(default=None)
     has_bike = models.BooleanField(default=True)
 
 
