@@ -12,8 +12,6 @@ class CustomRegisterSerializer(RegisterSerializer):
     email = serializers.EmailField(required=True)
     password1 = serializers.CharField(write_only=True)
     number = serializers.CharField(required=True)
-    #name = serializers.CharField()
-   # date_of_birth = serializers.DateField(required=True)
 
     user_type = serializers.ChoiceField(
         choices=(
@@ -42,7 +40,7 @@ class DealerProfileSerializer(serializers.ModelSerializer):
         model = DealerDetail
         fields = '__all__'
         read_only_fields = ('thumbnail', )
-        # depth=1
+        #depth=1
 
 
 class ClientProfileSerializer(serializers.ModelSerializer):

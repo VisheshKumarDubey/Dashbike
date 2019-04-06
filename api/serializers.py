@@ -55,19 +55,28 @@ class BikeModelSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class UserSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = CustomUser
+        exclude = (
+            'password', 'last_login', 'is_superuser', 'email',
+             'is_active',
+            'is_staff', 'groups', 'user_permissions','id','first_name','last_name',"date_joined",'user_type','number'
+        )
 class DealerDetailSerializer(serializers.ModelSerializer):
     reverseAdd=serializers.CharField(read_only=True)
+    type = UserSerializer()
     class Meta:
         model = DealerDetail
-        fields = ('id', 'extra_info', 'thumbnail','image','latitude','longitude','reverseAdd')
+        fields = ('id','type', 'extra_info', 'thumbnail','image','latitude','longitude','reverseAdd')
         read_only_fields = ('thumbnail', )
-       # depth=1
+        depth=1
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
         fields = '__all__'
-       # depth=1
+        depth=1
 
 class BikeSerializer(serializers.ModelSerializer):
     class Meta:
