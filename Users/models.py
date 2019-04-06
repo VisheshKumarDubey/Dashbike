@@ -62,7 +62,7 @@ class CustomUser(AbstractUser):
     )
     user_type = models.CharField(
         max_length=20, choices=type_choices, default='Client')
-    number=models.CharField(max_length=12,default='0000000000')
+    number=models.CharField(max_length=12,default=None,null=True)
 
     def __str__(self):
         return self.username

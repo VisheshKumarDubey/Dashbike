@@ -15,5 +15,6 @@ class CustomUserAccountAdapter(DefaultAccountAdapter):
         #user_field(user, 'first_name', request.data.get('first_name', ''))
         #user_field(user, 'last_name', request.data.get('last_name', ''))
         user_field(user, 'user_type', request.data.get('user_type', ''))
+        user_field(user, 'number', request.data.get('number', ''))
         user.save()
         return user

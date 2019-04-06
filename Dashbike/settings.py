@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '3@wu=@%01^7*5e&w1cs8p5#3y0c=679ej(+^!!s9iliy8=_n=i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  
+DEBUG = True 
 
 ALLOWED_HOSTS = ['*']
 
@@ -174,7 +174,7 @@ REST_AUTH_SERIALIZERS = {
 ACCOUNT_ADAPTER = 'Users.adapters.CustomUserAccountAdapter'
 
 # Email backend settings for Django
-EMAIL_BACKEND = ‘django.core.mail.backends.smtp.EmailBackend’
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'dashletter01@gmail.com'
 EMAIL_HOST_PASSWORD = 'django12345'

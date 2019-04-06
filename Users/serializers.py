@@ -11,7 +11,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     username = serializers.CharField(required=True)
     email = serializers.EmailField(required=True)
     password1 = serializers.CharField(write_only=True)
-    number =serializers.CharField(required=True)
+    number = serializers.CharField(required=True)
     #name = serializers.CharField()
    # date_of_birth = serializers.DateField(required=True)
 
@@ -26,13 +26,13 @@ class CustomRegisterSerializer(RegisterSerializer):
 
     def get_cleaned_data(self):
         super(CustomRegisterSerializer, self).get_cleaned_data()
-        print(self.validated_data.get('user_type', ''))
+        print(self.validated_data.get('number', ''))
         return {
             'password1': self.validated_data.get('password1', ''),
             'email': self.validated_data.get('email', ''),
             'username': self.validated_data.get('username', ''),
             'user_type': self.validated_data.get('user_type', ''),
-            'number':self.validated_data.get('number',''),
+            'number': self.validated_data.get('number', ''),
         }
 
 
@@ -42,7 +42,8 @@ class DealerProfileSerializer(serializers.ModelSerializer):
         model = DealerDetail
         fields = '__all__'
         read_only_fields = ('thumbnail', )
-        #depth=1
+        # depth=1
+
 
 class ClientProfileSerializer(serializers.ModelSerializer):
 
@@ -50,7 +51,7 @@ class ClientProfileSerializer(serializers.ModelSerializer):
         model = ClientDetail
         fields = '__all__'
         read_only_fields = ('thumbnail', )
-        #depth=1
+        # depth=1
 
 
 class CheckSerializer(serializers.ModelSerializer):
