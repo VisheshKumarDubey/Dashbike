@@ -41,7 +41,7 @@ def create_thumbnail(input_image, thumbnail_size=(256, 256)):
     new_filename = "thumb_"+str(storage.open(input_image.name))
 
     # save the image in Amazon S3 and return the filename
-    img.save(in_mem_file, format='JPEG')
+    img.save(in_mem_file, format='PNG')
     img_write = storage.open(new_filename, 'w+')
     img_write.write(in_mem_file.getvalue())
     img_write.close()

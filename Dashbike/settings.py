@@ -28,10 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-PAYTM_MERCHANT_KEY =  'u%uLycfYT_cK98O#'#'RFi7GYhNhViZL!Ch'  # 'u%uLycfYT_cK98O#'
-
-PAYTM_MERCHANT_ID = 'UJCLfw61676340334206'
-
 NEARBY_SHOPS = False
 
 ACTIVATE_EMAIL = True
@@ -55,11 +51,7 @@ INSTALLED_APPS = [
     'rest_auth',
     'api',
     'Users',
-   # 'gateway',
 ]
-
-if(ACTIVATE_EMAIL == False):
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SITE_ID = 1
 
@@ -174,12 +166,15 @@ REST_AUTH_SERIALIZERS = {
 ACCOUNT_ADAPTER = 'Users.adapters.CustomUserAccountAdapter'
 
 # Email backend settings for Django
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'dashletter01@gmail.com'
-EMAIL_HOST_PASSWORD = 'django12345'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+if(ACTIVATE_EMAIL == False):
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = 'dashletter01@gmail.com'
+    EMAIL_HOST_PASSWORD = 'django12345'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
 
 
 # django-allauth settings
@@ -205,6 +200,9 @@ ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy(
     'account_confirm_complete')
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
     'account_confirm_complete')
+
+#AWS settings.
+
 AWS_ACCESS_KEY_ID = 'AKIAQRD6ZYOMXGU7FEC2'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'dashu'

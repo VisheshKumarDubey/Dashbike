@@ -62,17 +62,6 @@ class BikeModelSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
-class UserSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = CustomUser
-        exclude = (
-            'password', 'last_login', 'is_superuser', 'email',
-            'is_active',
-            'is_staff', 'groups', 'user_permissions', 'id', 'first_name', 'last_name', "date_joined", 'user_type', 'number'
-        )
-
 class BookingSerializer(serializers.ModelSerializer):
     dealer_name=serializers.CharField(read_only=True)
     bike_model_name=serializers.CharField(read_only=True)

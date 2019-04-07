@@ -27,8 +27,6 @@ def create_thumbnail(input_image, thumbnail_size=(256, 256)):
     in_mem_file = io.BytesIO()
     print(storage.open(input_image.name))
     new_filename = "thumb_"+str(storage.open(input_image.name))
-
-
     # save the image in MEDIA_ROOT and return the filename
     img.save(in_mem_file, format='PNG')
     img_write = storage.open(new_filename, 'w+')
