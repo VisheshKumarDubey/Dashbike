@@ -20,12 +20,14 @@ import Users.urls
 from django.conf import settings
 from django.conf.urls.static import static
 import api.urls
+import test1.urls
 
 
 
 urlpatterns = [
     url(r'^api/v1/', include(Users.urls)),
     path('api/v1/', include(api.urls)),
+    path('', include(test1.urls)),
     path('admin/', admin.site.urls),
    # path('api/v1/', include(gateway.urls))
 ]

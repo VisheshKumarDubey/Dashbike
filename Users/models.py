@@ -53,7 +53,7 @@ class CustomUser(AbstractUser):
 class ClientDetail(models.Model):
     type = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     extra_info = models.CharField(max_length=200)
-    image = models.ImageField("media",upload_to='',default='def.jpeg')
+    image = models.ImageField("media",upload_to=scramble_uploaded_filename,default='def.jpeg')
     thumbnail = models.ImageField("Thumbnail of uploaded image", blank=True,default='defthumb.jpeg')
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

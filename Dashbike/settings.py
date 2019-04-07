@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'rest_auth',
     'api',
     'Users',
+    'test1',
 ]
 
 SITE_ID = 1
@@ -72,7 +73,7 @@ TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_ROOT],
+        'DIRS': [TEMPLATES_ROOT,],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -214,6 +215,7 @@ AWS_LOCATION = 'static'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'Dashbike/static'),
+    os.path.join(BASE_DIR, 'test1/static'),
 ]
 STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
