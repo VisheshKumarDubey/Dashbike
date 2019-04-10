@@ -18,10 +18,11 @@ class BikeModelSerializer(serializers.ModelSerializer):
     thumbnail = serializers.ImageField(read_only=True)
     bike_model = serializers.CharField()
     dealer = serializers.CharField(read_only=True)
+    bike_model_id=serializers.CharField(read_only=True)
 
     class Meta:
         model = BikeModel
-        fields = ('id', "bike_model", 'dealer', 'description', 'count', 'bike_rate_hr',
+        fields = ('id', "bike_model",'bike_model_id', 'dealer', 'description', 'count', 'bike_rate_hr',
                   'bike_rate_h', 'bike_rate_f', "bike_img", 'bike_isAvailable', 'thumbnail')
         read_only_fields = ('is_active', 'dealer')
         extra_kwargs = {'count': {'required': True}}

@@ -78,6 +78,8 @@ class BikeModel(models.Model):
     bike_rate_f = models.CharField(max_length=500, null=True, blank=True)
     bike_isAvailable = models.BooleanField(default=True)
     isActive = models.BooleanField(default=True)
+    def bike_model_id(self):
+        return str(self.bike_model.bike_model.id)
     
 
     def bike_img(self):
