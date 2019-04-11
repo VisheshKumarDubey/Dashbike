@@ -38,6 +38,7 @@ def create_thumbnail(input_image, thumbnail_size=(256, 256)):
 
 class CustomUser(AbstractUser):
     # add additional fields in here
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     type_choices = (
         ('Client', 'Client'),
         ('Dealer', 'Dealer'),
@@ -51,6 +52,7 @@ class CustomUser(AbstractUser):
 
 
 class ClientDetail(models.Model):
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     type = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     extra_info = models.CharField(max_length=200)
     image = models.ImageField("media",upload_to=scramble_uploaded_filename,default='def.jpeg')
@@ -76,6 +78,7 @@ class ClientDetail(models.Model):
 
 
 class DealerDetail(models.Model):
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     type = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     extra_info = models.CharField(max_length=200)
     latitude = models.FloatField(null=True, blank=True, default=None)

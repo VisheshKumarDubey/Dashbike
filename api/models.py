@@ -14,12 +14,7 @@ from PIL import Image
 
 
 def scramble_uploaded_filename(instance, filename):
-    """
-    Scramble / uglify the filename of the uploaded file, but keep the files extension (e.g., .jpg or .png)
-    :param instance:
-    :param filename:
-    :return:
-    """
+    
     extension = filename.split(".")[-1]
     return "media/bikes/{}.{}".format(uuid.uuid4(), extension)
 
@@ -51,6 +46,7 @@ def create_thumbnail(input_image, thumbnail_size=(256, 256)):
 
 
 class Bike(models.Model):
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bike_name = models.CharField(max_length=500, default=None)
     image = models.ImageField(
         "media", upload_to=scramble_uploaded_filename, default='def.jpg')
@@ -93,6 +89,7 @@ class BikeModel(models.Model):
         return str(self.bike_model)
 
 class Booking(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bike_model = models.ForeignKey(
         'BikeModel', on_delete=models.CASCADE, default=None)
     pickup_time = models.DateTimeField(default=None)

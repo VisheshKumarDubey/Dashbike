@@ -18,6 +18,8 @@ else:
     urlpatterns = [
     path('booking/', views.BookingList.as_view()),
     path('booking/<int:pk>/', views.BookingDetail.as_view()),
+    path('bike/', views.BikeList.as_view()),
+    path('bike/<int:pk>/', views.BikeDetail.as_view()),
     path('dealer/', views.DealerList.as_view()),
     path('dealer/<int:id>', views.BikeModelList.as_view()),
     path('dealer/<int:id>/<int:pk>', views.BikeModelDetail.as_view()),
