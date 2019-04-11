@@ -21,7 +21,7 @@ else:
     path('bike/', views.BikeList.as_view()),
     path('bike/<int:pk>/', views.BikeDetail.as_view()),
     path('dealer/', views.DealerList.as_view()),
-    path('dealer/<int:id>', views.BikeModelList.as_view()),
+    path('dealer/<int:id>/', views.BikeModelList.as_view()),
     path('dealer/<int:id>/<int:pk>', views.BikeModelDetail.as_view()),
 ]
 

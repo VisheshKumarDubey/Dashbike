@@ -14,7 +14,7 @@ from PIL import Image
 
 
 def scramble_uploaded_filename(instance, filename):
-    
+
     extension = filename.split(".")[-1]
     return "media/bikes/{}.{}".format(uuid.uuid4(), extension)
 
@@ -62,6 +62,7 @@ class Bike(models.Model):
     def __str__(self):
         return self.bike_name
 
+
 class BikeModel(models.Model):
     bike_model = models.ForeignKey(
         'Bike', on_delete=models.PROTECT, default=None)
@@ -74,9 +75,9 @@ class BikeModel(models.Model):
     bike_rate_f = models.CharField(max_length=500, null=True, blank=True)
     bike_isAvailable = models.BooleanField(default=True)
     isActive = models.BooleanField(default=True)
+
     def bike_model_id(self):
         return str(self.bike_model.bike_model.id)
-    
 
     def bike_img(self):
         return self.bike_model.image
@@ -88,8 +89,9 @@ class BikeModel(models.Model):
 
         return str(self.bike_model)
 
+
 class Booking(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bike_model = models.ForeignKey(
         'BikeModel', on_delete=models.CASCADE, default=None)
     pickup_time = models.DateTimeField(default=None)
@@ -121,10 +123,9 @@ class Booking(models.Model):
 
     def __str__(self):
         return str(self.bike_model.dealer)
+
     def dealer_name(self):
         return str(self.bike_model.dealer.type.username)
+
     def bike_model_name(self):
         return str(self.bike_model.bike_model.bike_name)
-
-
-
