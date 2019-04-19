@@ -1,30 +1,45 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from pyfcm import FCMNotification
-from Users.models import CustomUser
+from Users.models import *
 from api.models import Booking
-# Create your views here.
+from django.conf import settings
 import json
 from django.http import StreamingHttpResponse
 
 
-def fcm_insert(request,pk):
-    token=request.GET.get('fcm_token','')
-    a=CustomUser.objects.filter(id=pk).update(fcm_token=token)
-    print(a)
+def fcm_insert(request, pk):
+    token = request.GET.get('fcm_token', '')
+    user_type = request.GET.get('user_type', '')
+    if user_type == 'client':
+        a = CustomUser.objects.filter(
+            username=ClientDetail.objects.get(id=pk)).update(fcm_token=token)
+    if user_type == 'dealer':
+        a = CustomUser.objects.filter(
+            username=DealerDetail.objects.get(id=pk)).update(fcm_token=token)
     return HttpResponse(token)
 
 
-def send_notifications(request): #the method which sends the notification
-    #received_json_data = json.loads(request.body.decode("utf-8"))
-	path_to_fcm = "https://fcm.googleapis.com"
-	server_key = 'AAAAzhLjAdI:APA91bFgn-4PLcHtcPaX4H3EdM2MyyCOb7mHgIUNQISdmJlUoI_hm4suFKPVStcjCoYwQiftypmsJXYNlRo-4S5pPnFmLQrPBEn7-K0D2sWQHmc0abbZdOApSrh16LqbpjOrJ7QIISsx'
-	reg_id = request.GET.get('to_token','')#'cTksz72F6uU:APA91bEKsq_oCyqHX6rk3Ne6-KWFfMSdecmLVy7zKUqHLjaCwybC4tF1e9uVhRsFC00fyFKCV3z8JGhWYxVFx4paMkE8REe8f4JNxBcNi2TseF04JhEl7MJnb0M6Qk60n83NFwf8I9g0'#CustomUser.objects.all()[4].fcm_token #quick and dirty way to get that ONE fcmId from table
-	message_title =request.GET.get('title','')
-	message_body = request.GET.get('body','')
-	result = FCMNotification(api_key=server_key).notify_single_device(registration_id=reg_id, message_title=message_title, message_body=message_body)
-	return HttpResponse(result)
+'''
+
+		We have to create a view  which checks for fcm token, 
+		if there is no fcm token it returns false else it returns true
+
+'''
 
 
-	#in case you wanna send notifications to multitple ids in just replace the argument registration_id in the notify_single_device
-#function with registration_ids and provide it with the list of ids you wanna send notifications to.
+def send_notifications(request, pk):  # the method which sends the notification
+    if(str(request.GET.get('user_type', '')) == 'client'):
+        reg_id = CustomUser.objects.get(
+            username=ClientDetail.objects.get(id=pk)).fcm_token
+    if(str(request.GET.get('user_type', '')) == 'dealer'):
+        reg_id = CustomUser.objects.get(
+            username=DealerDetail.objects.get(id=pk)).fcm_token
+    message_title = request.GET.get('title', '')
+    message_body = request.GET.get('body', '')
+    result = FCMNotification(api_key=settings.FCM_SERVER_KEY).notify_single_device(
+        registration_id=reg_id, message_title=message_title, message_body=message_body)
+    return HttpResponse(result)
+
+    # in case you wanna send notifications to multitple ids in just replace the argument registration_id in the notify_single_device
+# function with registration_ids and provide it with the list of ids you wanna send notifications to.

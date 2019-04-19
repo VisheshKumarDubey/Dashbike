@@ -23,7 +23,7 @@ def complete_view(request):
 
 
 class DealerViewSet(viewsets.ModelViewSet):
-    queryset = DealerDetail.objects.all()
+    #queryset = DealerDetail.objects.all()
     serializer_class = DealerProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
@@ -35,7 +35,7 @@ class DealerViewSet(viewsets.ModelViewSet):
                 obj = DealerDetail.objects.filter(type=self.request.user)
             except DealerDetail.DoesNotExist:
                 raise Http404("No MyModel matches the given query.")
-            return redirect('/api/v1/profile/dealer/')
+            return redirect('/api/v1/profile/client/')
 
 
 class ClientViewSet(viewsets.ModelViewSet):

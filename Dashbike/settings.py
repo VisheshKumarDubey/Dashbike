@@ -32,6 +32,10 @@ NEARBY_SHOPS = False
 
 ACTIVATE_EMAIL = True
 
+FCM_PATH='https://fcm.googleapis.com'
+
+FCM_SERVER_KEY='AAAAzhLjAdI:APA91bFgn-4PLcHtcPaX4H3EdM2MyyCOb7mHgIUNQISdmJlUoI_hm4suFKPVStcjCoYwQiftypmsJXYNlRo-4S5pPnFmLQrPBEn7-K0D2sWQHmc0abbZdOApSrh16LqbpjOrJ7QIISsx'
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',

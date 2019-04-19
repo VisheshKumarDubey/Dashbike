@@ -1,9 +1,9 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.db.models.signals import post_save
 import uuid
 import os
 import io
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save
 from django.core.files.storage import default_storage as storage
 from django.conf import settings
 from PIL import Image
@@ -89,6 +89,10 @@ class DealerDetail(models.Model):
     on_hour=models.DateTimeField(null=True,default=None)
     off_hour=models.DateTimeField(null=True,default=None)
     has_bike = models.BooleanField(default=True)
+    add_1=models.CharField(max_length=200,null=True,default=None)
+    add_2=models.CharField(max_length=200,null=True,default=None)
+    area=models.CharField(max_length=200,null=True,default=None)
+    city=models.CharField(max_length=200,null=True,default=None)
 
 
     def save(self, *args, **kwargs):

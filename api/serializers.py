@@ -90,13 +90,12 @@ class BookingSerializer(serializers.ModelSerializer):
         #depth=1
 
 class DealerDetailSerializer(serializers.ModelSerializer):
-    reverseAdd = serializers.CharField(read_only=True)
     dealer_name=serializers.CharField(read_only=True)
     
     class Meta:
         model = DealerDetail
         fields = ('id', 'dealer_name','extra_info', 'thumbnail',
-                  'image', 'latitude', 'longitude', 'reverseAdd')
+                  'image', 'latitude', 'longitude', )
         read_only_fields = ('thumbnail', )
         #depth = 1
 

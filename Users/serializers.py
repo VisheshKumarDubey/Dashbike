@@ -35,10 +35,13 @@ class CustomRegisterSerializer(RegisterSerializer):
 
 
 class DealerProfileSerializer(serializers.ModelSerializer):
-
+    dealer_name=serializers.CharField(read_only=True)
+    
     class Meta:
         model = DealerDetail
-        fields = '__all__'
+        fields = ('id', 'dealer_name','extra_info', 'thumbnail',
+                  'image', 'latitude', 'longitude', 'on_hour','off_hour','has_bike'
+                  ,'add_1','add_2','area','city')
         read_only_fields = ('thumbnail', )
         #depth=1
 
