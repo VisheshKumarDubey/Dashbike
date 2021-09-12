@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3@wu=@%01^7*5e&w1cs8p5#3y0c=679ej(+^!!s9iliy8=_n=i'
+SECRET_KEY = '3@wu=@%01^7*5e&w1cs8p5#3y#################################'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
@@ -34,7 +34,7 @@ ACTIVATE_EMAIL = False
 
 FCM_PATH='https://fcm.googleapis.com'
 
-FCM_SERVER_KEY='AAAAzhLjAdI:APA91bFgn-4PLcHtcPaX4H3EdM2MyyCOb7mHgIUNQISdmJlUoI_hm4suFKPVStcjCoYwQiftypmsJXYNlRo-4S5pPnFmLQrPBEn7-K0D2sWQHmc0abbZdOApSrh16LqbpjOrJ7QIISsx'
+FCM_SERVER_KEY='AAAAzhLjAdI:APA91bFgn-4PLcHtcPaX4H3EdM2MyyCOb7mHgIUNQISdmJlUoI_hm4suFKPVStcjCoYwQiftypmsJXYNlRo-##############################################'
 
 
 INSTALLED_APPS = [
@@ -184,7 +184,7 @@ else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = 'dashletter01@gmail.com'
-    EMAIL_HOST_PASSWORD = 'Django@1726'
+    EMAIL_HOST_PASSWORD = '###############'
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
 
@@ -215,8 +215,8 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
 
 #AWS settings.
 
-AWS_ACCESS_KEY_ID = 'AKIAQL3GWAJVPNLJ2KCQ'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 'AKIAQL3GWAJVP###########'
+AWS_SECRET_ACCESS_KEY = 'tF82LOx968S7FUp/VMj###########'
 AWS_STORAGE_BUCKET_NAME = 'dashu'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
