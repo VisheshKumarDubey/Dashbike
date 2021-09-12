@@ -28,9 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-NEARBY_SHOPS = False
+NEARBY_SHOPS = True
 
-ACTIVATE_EMAIL = True
+ACTIVATE_EMAIL = False
 
 FCM_PATH='https://fcm.googleapis.com'
 
@@ -184,7 +184,7 @@ else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = 'dashletter01@gmail.com'
-    EMAIL_HOST_PASSWORD = 'django12345'
+    EMAIL_HOST_PASSWORD = 'Django@1726'
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
 
@@ -201,7 +201,7 @@ AUTHENTICATION_BACKENDS = (
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     )
 }
 ACCOUNT_EMAIL_REQUIRED = True
@@ -215,8 +215,8 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
 
 #AWS settings.
 
-AWS_ACCESS_KEY_ID = 'AKIAQRD6ZYOMXGU7FEC2'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 'AKIAQL3GWAJVPNLJ2KCQ'
+AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'dashu'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {

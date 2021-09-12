@@ -5,7 +5,7 @@ from django.core.files.storage import default_storage as storage
 def save(self, *args, **kwargs):
     super().save(*args, **kwargs)
 
-    img_read = storage.open(self.image.name, 'r')
+    img_read = storage.open(self.image.name, 'rb')
     img = Image.open(img_read)
 
     if img.height > 300 or img.width > 300:

@@ -19,7 +19,7 @@ def create_thumbnail(input_image, thumbnail_size=(256, 256)):
     
     if not input_image or input_image == "":
         return
-    img_read = storage.open(input_image.name, 'r')
+    img_read = storage.open(input_image.name, 'rb')
     img = Image.open(img_read)
 
     # use PILs thumbnail method; use anti aliasing to make the scaled picture look good
@@ -56,8 +56,8 @@ class ClientDetail(models.Model):
     #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     type = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     extra_info = models.CharField(max_length=200)
-    image = models.ImageField("media",upload_to=scramble_uploaded_filename,default='def.jpeg')
-    thumbnail = models.ImageField("Thumbnail of uploaded image", blank=True,default='defthumb.jpeg')
+    image = models.ImageField("media",upload_to=scramble_uploaded_filename,default='def.jpg')
+    thumbnail = models.ImageField("Thumbnail of uploaded image", blank=True,default='defthumb.jpg')
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         # generate and set thumbnail or none
@@ -84,8 +84,8 @@ class DealerDetail(models.Model):
     extra_info = models.CharField(max_length=200)
     latitude = models.FloatField(null=True, blank=True, default=None)
     longitude = models.FloatField(null=True, blank=True, default=None)
-    image = models.ImageField("media",upload_to=scramble_uploaded_filename,default='def.jpeg')
-    thumbnail = models.ImageField("Thumbnail of uploaded image", blank=True,default='defthumb.jpeg')
+    image = models.ImageField("media",upload_to=scramble_uploaded_filename,default='def.jpg')
+    thumbnail = models.ImageField("Thumbnail of uploaded image", blank=True,default='defthumb.jpg')
     on_hour=models.DateTimeField(null=True,default=None)
     off_hour=models.DateTimeField(null=True,default=None)
     has_bike = models.BooleanField(default=True)

@@ -25,7 +25,7 @@ def create_thumbnail(input_image, thumbnail_size=(256, 256)):
 
     if not input_image or input_image == "":
         return
-    img_read = storage.open(input_image.name, 'r')
+    img_read = storage.open(input_image.name, 'rb')
     img = Image.open(img_read)
 
     # use PILs thumbnail method; use anti aliasing to make the scaled picture look good
